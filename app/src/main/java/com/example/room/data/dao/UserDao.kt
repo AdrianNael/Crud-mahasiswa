@@ -1,5 +1,6 @@
 package com.example.room.data.dao
 
+import android.icu.text.StringSearch
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,8 +10,11 @@ import com.example.room.data.entity.User
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM user ORDER BY full_name ASC")
     fun getAll(): List<User>
+
+    @Query("SELECT * FROM user WHERE full_name LIKE '%' || :search || '%'")
+    fun searchByName(search: String): List<User>
 
     @Query("SELECT * FROM user WHERE uid IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<User>
