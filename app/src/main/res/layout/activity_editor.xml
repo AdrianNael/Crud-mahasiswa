@@ -4,95 +4,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EditorActivity"
-    android:padding="24dp"
     android:layout_marginTop="24dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".EditorActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
         app:boxBackgroundColor="@color/white"
         app:boxBackgroundMode="filled"
-        android:layout_marginBottom="14dp"
         app:boxStrokeColor="@color/primary">
+
         <EditText
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
             android:hint="@string/name"
-            android:textColorHint="@color/primary"
-            />
+            android:inputType="textPersonName"
+            android:textColorHint="@color/primary" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
         app:boxBackgroundColor="@color/white"
         app:boxBackgroundMode="filled"
-        android:layout_marginBottom="14dp"
         app:boxStrokeColor="@color/primary">
+
+        <EditText
+            android:id="@+id/et_nik"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nik"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/primary" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundMode="filled"
+        app:boxStrokeColor="@color/primary">
+
         <EditText
             android:id="@+id/et_jurusan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
             android:hint="@string/jurusan"
-            android:textColorHint="@color/primary"
-            />
+            android:inputType="textPersonName"
+            android:textColorHint="@color/primary" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
         app:boxBackgroundColor="@color/white"
         app:boxBackgroundMode="filled"
-        android:layout_marginBottom="14dp"
         app:boxStrokeColor="@color/primary">
+
         <EditText
             android:id="@+id/et_alamat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
             android:hint="@string/alamat"
-            android:textColorHint="@color/primary"
-            />
+            android:inputType="textPersonName"
+            android:textColorHint="@color/primary" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
         app:boxBackgroundColor="@color/white"
-        app:boxBackgroundMode="filled"
-        android:layout_marginBottom="14dp">
+        app:boxBackgroundMode="filled">
+
         <EditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="@string/email"/>
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
         app:boxBackgroundColor="@color/white"
-        app:boxBackgroundMode="filled"
-        android:layout_marginBottom="14dp">
+        app:boxBackgroundMode="filled">
+
         <EditText
             android:id="@+id/et_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:hint="@string/phone"/>
+            android:hint="@string/phone"
+            android:inputType="phone" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/save"/>
+        android:text="@string/save" />
 
 </LinearLayout>

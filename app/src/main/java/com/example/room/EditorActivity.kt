@@ -11,10 +11,11 @@ import com.example.room.data.entity.User
 
 class EditorActivity : AppCompatActivity() {
     private lateinit var fullName: EditText
-    private lateinit var jurusan : EditText
     private lateinit var alamat : EditText
     private lateinit var email: EditText
     private lateinit var phone: EditText
+    private lateinit var nik : EditText
+    private lateinit var jurusan : EditText
 
     private lateinit var btnSave: Button
 
@@ -25,6 +26,7 @@ class EditorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editor)
         fullName = findViewById(R.id.et_name)
+        nik = findViewById(R.id.et_nik)
         jurusan = findViewById(R.id.et_jurusan)
         alamat = findViewById(R.id.et_alamat)
         email = findViewById(R.id.et_email)
@@ -43,6 +45,7 @@ class EditorActivity : AppCompatActivity() {
             var user = database.userDao().get(id)
             //buat menampilkan, jadi kalau ada intent form akan mengisi secara otomatis
             fullName.setText(user.fullName)
+            nik.setText(user.nik)
             jurusan.setText(user.jurusan)
             alamat.setText(user.alamat)
             email.setText(user.email)
@@ -51,13 +54,14 @@ class EditorActivity : AppCompatActivity() {
 
         //kondisi setelah buttonSave diklik
         btnSave.setOnClickListener {
-            if (fullName.text.isNotEmpty() && email.text.isNotEmpty() && phone.text.isNotEmpty() ) {
+            if (fullName.text.isNotEmpty() && nik.text.isNotEmpty() && jurusan.text.isNotEmpty() ) {
                 if (intent!=null){
                     //untuk edit data
                     database.userDao().update(
                         User(
                             intent.getInt("id",0),
                             fullName.text.toString(),
+                            nik.text.toString(),
                             jurusan.text.toString(),
                             alamat.text.toString(),
                             email.text.toString(),
@@ -70,6 +74,7 @@ class EditorActivity : AppCompatActivity() {
                         User(
                             null,
                             fullName.text.toString(),
+                            nik.text.toString(),
                             jurusan.text.toString(),
                             alamat.text.toString(),
                             email.text.toString(),
