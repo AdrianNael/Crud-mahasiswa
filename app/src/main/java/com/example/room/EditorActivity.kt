@@ -11,6 +11,7 @@ import com.example.room.data.entity.User
 
 class EditorActivity : AppCompatActivity() {
     private lateinit var fullName: EditText
+    private lateinit var jurusan : EditText
     private lateinit var alamat : EditText
     private lateinit var email: EditText
     private lateinit var phone: EditText
@@ -24,6 +25,7 @@ class EditorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editor)
         fullName = findViewById(R.id.et_name)
+        jurusan = findViewById(R.id.et_jurusan)
         alamat = findViewById(R.id.et_alamat)
         email = findViewById(R.id.et_email)
         phone = findViewById(R.id.et_phone)
@@ -31,7 +33,7 @@ class EditorActivity : AppCompatActivity() {
 
         database = AppDatabase.getInstance(applicationContext)
 
-        //karena di MainActivity kita ambil id untuk menampilkan data maka
+        //karena di MainActivity  diambil id untuk menampilkan data maka
         //di EditorActivity kit harus tangkap si id tersebut
         val intent = intent.extras
         if (intent!=null){
@@ -41,6 +43,7 @@ class EditorActivity : AppCompatActivity() {
             var user = database.userDao().get(id)
             //buat menampilkan, jadi kalau ada intent form akan mengisi secara otomatis
             fullName.setText(user.fullName)
+            jurusan.setText(user.jurusan)
             alamat.setText(user.alamat)
             email.setText(user.email)
             phone.setText(user.phone)
@@ -48,16 +51,17 @@ class EditorActivity : AppCompatActivity() {
 
         //kondisi setelah buttonSave diklik
         btnSave.setOnClickListener {
-            if (fullName.text.isNotEmpty() && email.text.isNotEmpty() && phone.text.isNotEmpty()) {
+            if (fullName.text.isNotEmpty() && email.text.isNotEmpty() && phone.text.isNotEmpty() ) {
                 if (intent!=null){
                     //untuk edit data
                     database.userDao().update(
                         User(
                             intent.getInt("id",0),
                             fullName.text.toString(),
+                            jurusan.text.toString(),
                             alamat.text.toString(),
                             email.text.toString(),
-                            phone.text.toString()
+                            phone.text.toString(),
                         )
                     )
                 }else{
@@ -66,9 +70,10 @@ class EditorActivity : AppCompatActivity() {
                         User(
                             null,
                             fullName.text.toString(),
+                            jurusan.text.toString(),
                             alamat.text.toString(),
                             email.text.toString(),
-                            phone.text.toString()
+                            phone.text.toString(),
                         )
                     )
                 }

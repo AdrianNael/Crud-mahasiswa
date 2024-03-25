@@ -22,12 +22,17 @@ class UserAdapter(var list: List<User>) : RecyclerView.Adapter<UserAdapter.ViewH
 
     inner class ViewHolder(view: View) :RecyclerView.ViewHolder(view){
         var fullName: TextView
+        var jurusan : TextView
         var alamat : TextView
         var email: TextView
         var phone: TextView
+        var nik : TextView
+
 
         init{
             fullName = view.findViewById(R.id.full_name)
+            nik = view.findViewById(R.id.nik)
+            jurusan = view.findViewById(R.id.et_jurusan)
             alamat = view.findViewById(R.id.alamat_rumah)
             email = view.findViewById(R.id.email)
             phone = view.findViewById(R.id.phone)
@@ -48,6 +53,8 @@ class UserAdapter(var list: List<User>) : RecyclerView.Adapter<UserAdapter.ViewH
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.fullName.text = list[position].fullName
+        holder.nik.text = list[position].nik.toString()
+        holder.jurusan.text = list[position].jurusan
         holder.alamat.text = list[position].alamat
         holder.email.text = list[position].email
         holder.phone.text = list[position].phone

@@ -5,6 +5,7 @@
     <string name="email">Email</string>
     <string name="phone">No.Telephone</string>
     <string name="save">Simpan</string>
+    <string name="jurusan">Ketik Jurusan</string>
 
     <string-array name="items_option">
         <item>Edit</item>
