@@ -1,5 +1,6 @@
 package com.example.room
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -10,16 +11,20 @@ import com.example.room.data.entity.User
 
 class EditorActivity : AppCompatActivity() {
     private lateinit var fullName: EditText
+    private lateinit var alamat : EditText
     private lateinit var email: EditText
     private lateinit var phone: EditText
+
     private lateinit var btnSave: Button
 
     private lateinit var database: AppDatabase //yg udah di buat di dalam package data
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editor)
         fullName = findViewById(R.id.et_name)
+        alamat = findViewById(R.id.et_alamat)
         email = findViewById(R.id.et_email)
         phone = findViewById(R.id.et_phone)
         btnSave = findViewById(R.id.btn_save)
@@ -36,6 +41,7 @@ class EditorActivity : AppCompatActivity() {
             var user = database.userDao().get(id)
             //buat menampilkan, jadi kalau ada intent form akan mengisi secara otomatis
             fullName.setText(user.fullName)
+            alamat.setText(user.alamat)
             email.setText(user.email)
             phone.setText(user.phone)
         }
@@ -49,6 +55,7 @@ class EditorActivity : AppCompatActivity() {
                         User(
                             intent.getInt("id",0),
                             fullName.text.toString(),
+                            alamat.text.toString(),
                             email.text.toString(),
                             phone.text.toString()
                         )
@@ -59,6 +66,7 @@ class EditorActivity : AppCompatActivity() {
                         User(
                             null,
                             fullName.text.toString(),
+                            alamat.text.toString(),
                             email.text.toString(),
                             phone.text.toString()
                         )

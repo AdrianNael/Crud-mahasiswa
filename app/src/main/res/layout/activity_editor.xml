@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditorActivity"
-    android:padding="14dp"
+    android:padding="24dp"
+    android:layout_marginTop="24dp"
     android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -13,13 +14,34 @@
         android:layout_height="wrap_content"
         app:boxBackgroundColor="@color/white"
         app:boxBackgroundMode="filled"
-        android:layout_marginBottom="14dp">
+        android:layout_marginBottom="14dp"
+        app:boxStrokeColor="@color/primary">
         <EditText
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:hint="@string/name"/>
+            android:hint="@string/name"
+            android:textColorHint="@color/primary"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/white"
+        app:boxBackgroundMode="filled"
+        android:layout_marginBottom="14dp"
+        app:boxStrokeColor="@color/primary">
+        <EditText
+            android:id="@+id/et_alamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="@string/alamat"
+            android:textColorHint="@color/primary"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -55,4 +77,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/save"/>
+
 </LinearLayout>

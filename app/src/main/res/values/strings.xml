@@ -1,13 +1,14 @@
 <resources>
-    <string name="app_name">Room</string>
+    <string name="app_name">Data Mahasiswa</string>
     <string name="name">Nama lengkap</string>
-    <string name="email">Alamat email</string>
+    <string name="alamat">Alamat Rumah</string>
+    <string name="email">Email</string>
     <string name="phone">No.Telephone</string>
     <string name="save">Simpan</string>
 
     <string-array name="items_option">
-        <item>Edit</item> //urutan 0
-        <item>Delete</item> //urutan 1
-        <item>Cancel</item> //urutan 2
+        <item>Edit</item>
+        <item>Delete</item>
+        <item>Cancel</item>
     </string-array>
 </resources>

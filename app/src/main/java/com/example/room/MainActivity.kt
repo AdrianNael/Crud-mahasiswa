@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,48 +29,64 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycler_view)
         fab = findViewById(R.id.fab)
 
+
         adapter = UserAdapter(list)
         database = AppDatabase.getInstance(applicationContext)
         //implementasi listener
-        adapter.setDialog(object : UserAdapter.Dialog{
+        adapter.setDialog(object : UserAdapter.Dialog {
             override fun onClick(position: Int) {
-                //untuk membuat tampilan dialog
+                // Untuk membuat tampilan dialog
                 val dialog = AlertDialog.Builder(this@MainActivity)
-                dialog.setTitle(list[position].fullName)
-                dialog.setItems(R.array.items_option, DialogInterface.OnClickListener { dialog, which ->
-                    //aksi untuk tiap item
-                    if (which == 0) {
-                        //coding edit
-                        val intent = Intent(this@MainActivity, EditorActivity::class.java)
-                        //mengambil data, id diambil dari list
-                        intent.putExtra("id", list[position].uid)
-                        //buat membuka editor activity
-                        startActivity(intent)
-                    } else if (which == 1) {
-                        //coding delete
-                        database.userDao().delete(list[position])
-                        //cara refresh ketika sudah didelete
-                        getData()
-                    }else{
-                        //coding cancel
-                        dialog.dismiss()
+                dialog.setTitle("Pilih Aksi yang Dinginkan")
+                dialog.setItems(R.array.items_option) { dialog, which ->
+                    // Aksi untuk tiap item
+                    when (which) {
+                        0 -> {
+                            // Coding edit
+                            val intent = Intent(this@MainActivity, EditorActivity::class.java)
+                            // Mengambil data, id diambil dari list
+                            intent.putExtra("id", list[position].uid)
+                            // Untuk membuka EditorActivity
+                            startActivity(intent)
+                        }
+
+                        1 -> {
+                            // Coding delete
+                            val animation = AnimationUtils.loadAnimation(
+                                this@MainActivity,
+                                android.R.anim.slide_in_left
+                            )
+                            animation.duration = 1000
+                            recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.startAnimation(
+                                animation
+                            )
+
+
+                            // Menghapus data dari database
+                            database.userDao().delete(list[position])
+                            // Menghapus item dari list
+                            list.removeAt(position)
+                            // Memberitahu adapter bahwa item telah dihapus
+                            adapter.notifyItemRemoved(position)
+                        }
+
+                        else -> dialog.dismiss()
                     }
-                })
-                //untuk menampilkan dialog
-                val dialogView = dialog.create()
-                dialogView.show()
+                }
+                dialog.show()
             }
         })
+
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(applicationContext, VERTICAL, false)
         recyclerView.addItemDecoration(DividerItemDecoration(applicationContext, VERTICAL))
 
-        //ketika tombol add ditekan (buat edit)
-        fab.setOnClickListener{
+        fab.setOnClickListener {
             startActivity(Intent(this, EditorActivity::class.java))
         }
     }
+
     //panggil getData
     override fun onResume() {
         super.onResume()
@@ -78,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
     //membuat data
     @SuppressLint("NotifyDataSetChanged")
-    fun getData(){
+    fun getData() {
         list.clear()
         list.addAll(database.userDao().getAll())
         adapter.notifyDataSetChanged()
