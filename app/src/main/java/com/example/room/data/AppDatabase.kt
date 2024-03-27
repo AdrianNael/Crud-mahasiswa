@@ -7,20 +7,31 @@ import androidx.room.RoomDatabase
 import com.example.room.data.dao.UserDao
 import com.example.room.data.entity.User
 
+// Mendefinisikan kelas database menggunakan Room Persistence Library
 @Database(entities = [User::class], version = 5)
-abstract class AppDatabase : RoomDatabase(){
+abstract class AppDatabase : RoomDatabase() {
+
+    // Mendeklarasikan abstract function untuk mendapatkan objek UserDao
     abstract fun userDao(): UserDao
 
-    companion object{
+    companion object {
+        // Mendeklarasikan instance database sebagai variabel nullable
         private var instance: AppDatabase? = null
 
-        fun getInstance(context: Context):AppDatabase{
-            if (instance==null){
-                instance = Room.databaseBuilder(context, AppDatabase::class.java, "app-database")
-                    .fallbackToDestructiveMigration()
-                    .allowMainThreadQueries()
-                    .build()
+        // Metode untuk mendapatkan instance tunggal dari kelas AppDatabase
+        fun getInstance(context: Context): AppDatabase {
+            // Jika instance belum dibuat, maka buat instance baru
+            if (instance == null) {
+                // Membangun database menggunakan Room
+                instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java, "app-database"
+                )
+                    .fallbackToDestructiveMigration() // Mengizinkan migrasi data yang merusak jika diperlukan
+                    .allowMainThreadQueries() // Mengizinkan kueri dijalankan di thread utama (harus digunakan dengan hati-hati)
+                    .build() // Membangun instance database
             }
+            // Mengembalikan instance database
             return instance!!
         }
     }

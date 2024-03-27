@@ -19,12 +19,14 @@ class EditorActivity : AppCompatActivity() {
 
     private lateinit var btnSave: Button
 
-    private lateinit var database: AppDatabase //yg udah di buat di dalam package data
+    private lateinit var database: AppDatabase // Objek untuk mengakses database
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_editor)
+        setContentView(R.layout.activity_editor) // Mengatur tata letak tampilan dari file XML activity_editor
+
+        // Inisialisasi elemen UI
         fullName = findViewById(R.id.et_name)
         nik = findViewById(R.id.et_nik)
         jurusan = findViewById(R.id.et_jurusan)
@@ -33,17 +35,15 @@ class EditorActivity : AppCompatActivity() {
         phone = findViewById(R.id.et_phone)
         btnSave = findViewById(R.id.btn_save)
 
-        database = AppDatabase.getInstance(applicationContext)
+        database = AppDatabase.getInstance(applicationContext) // Inisialisasi database
 
-        //karena di MainActivity  diambil id untuk menampilkan data maka
-        //di EditorActivity kit harus tangkap si id tersebut
+        // Mengambil data intent jika ada
         val intent = intent.extras
-        if (intent!=null){
-            //maka akan diedit
-            //diambil dari data yang dikirim
+        if (intent != null){
+            // Jika intent tidak null, maka data akan diedit
             val id = intent.getInt("id", 0)
             var user = database.userDao().get(id)
-            //buat menampilkan, jadi kalau ada intent form akan mengisi secara otomatis
+            // Menampilkan data ke dalam form
             fullName.setText(user.fullName)
             nik.setText(user.nik)
             jurusan.setText(user.jurusan)
@@ -52,14 +52,15 @@ class EditorActivity : AppCompatActivity() {
             phone.setText(user.phone)
         }
 
-        //kondisi setelah buttonSave diklik
+        // Event listener untuk tombol Save
         btnSave.setOnClickListener {
+            // Memeriksa apakah semua field sudah terisi
             if (fullName.text.isNotEmpty() && nik.text.isNotEmpty() && jurusan.text.isNotEmpty() ) {
-                if (intent!=null){
-                    //untuk edit data
+                if (intent != null){
+                    // Jika intent tidak null, maka ini adalah proses edit data
                     database.userDao().update(
                         User(
-                            intent.getInt("id",0),
+                            intent.getInt("id",0), // Mengambil id dari intent
                             fullName.text.toString(),
                             nik.text.toString(),
                             jurusan.text.toString(),
@@ -68,11 +69,11 @@ class EditorActivity : AppCompatActivity() {
                             phone.text.toString(),
                         )
                     )
-                }else{
-                    //buat nambah data saja
+                } else {
+                    // Jika intent null, maka ini adalah proses penambahan data
                     database.userDao().insertAll(
                         User(
-                            null,
+                            null, // Karena ini proses penambahan, id akan di-generate oleh Room
                             fullName.text.toString(),
                             nik.text.toString(),
                             jurusan.text.toString(),
@@ -82,8 +83,9 @@ class EditorActivity : AppCompatActivity() {
                         )
                     )
                 }
-                finish()
+                finish() // Menutup EditorActivity setelah operasi selesai
             } else {
+                // Jika ada field yang kosong, tampilkan pesan toast
                 Toast.makeText(applicationContext, "Mohon lengkapi semua data", Toast.LENGTH_SHORT)
                     .show()
             }

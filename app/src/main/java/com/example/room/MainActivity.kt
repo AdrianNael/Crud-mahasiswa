@@ -45,14 +45,14 @@ class MainActivity : AppCompatActivity() {
         //implementasi listener
         adapter.setDialog(object : UserAdapter.Dialog {
             override fun onClick(position: Int) {
-                // Untuk membuat tampilan dialog
+                //  membuat  dialog
                 val dialog = AlertDialog.Builder(this@MainActivity)
                 dialog.setTitle("Pilih Aksi yang Dinginkan")
                 dialog.setItems(R.array.items_option) { dialog, which ->
-                    // Aksi untuk tiap item
+                    // Aksi
                     when (which) {
                         0 -> {
-                            // Coding edit
+                            // edit
                             val intent = Intent(this@MainActivity, EditorActivity::class.java)
                             // Mengambil data, id diambil dari list
                             intent.putExtra("id", list[position].uid)
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         1 -> {
-                            // Coding delete
+                            // delete
                             val animation = AnimationUtils.loadAnimation(
                                 this@MainActivity,
                                 android.R.anim.slide_in_left
