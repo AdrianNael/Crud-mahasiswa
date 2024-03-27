@@ -10,15 +10,15 @@ import com.example.room.data.entity.User
 // DAO untuk berinteraksi dengan entitas User dalam database
 @Dao
 interface UserDao {
-    // Mendapatkan semua pengguna dari database, diurutkan berdasarkan nama
+    // Mendapatkan semua pengguna
     @Query("SELECT * FROM user ORDER BY full_name ASC")
     fun getAll(): List<User>
 
-    // Mencari pengguna berdasarkan nama lengkap
+    // Mencari
     @Query("SELECT * FROM user WHERE full_name LIKE '%' || :search || '%'")
     fun searchByName(search: String): List<User>
 
-    // Memuat pengguna berdasarkan ID
+    // Memuat
     @Query("SELECT * FROM user WHERE uid IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<User>
 
@@ -26,7 +26,7 @@ interface UserDao {
     @Insert
     fun insertAll(vararg users: User)
 
-    // Menghapus pengguna dari database
+    // Menghapus
     @Delete
     fun delete(user: User)
 
@@ -34,7 +34,7 @@ interface UserDao {
     @Query("SELECT * FROM user WHERE uid = :uid")
     fun get(uid: Int): User
 
-    // Memperbarui pengguna dalam database
+    // Memperbarui
     @Update
     fun update(user: User)
 }

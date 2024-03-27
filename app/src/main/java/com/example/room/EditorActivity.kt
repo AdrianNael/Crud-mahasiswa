@@ -24,9 +24,9 @@ class EditorActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_editor) // Mengatur tata letak tampilan dari file XML activity_editor
+        setContentView(R.layout.activity_editor) // Mengatur tata letak tampilan dari activity_editor
 
-        // Inisialisasi elemen UI
+        // Inisialisasi elemen di xml
         fullName = findViewById(R.id.et_name)
         nik = findViewById(R.id.et_nik)
         jurusan = findViewById(R.id.et_jurusan)
@@ -37,7 +37,7 @@ class EditorActivity : AppCompatActivity() {
 
         database = AppDatabase.getInstance(applicationContext) // Inisialisasi database
 
-        // Mengambil data intent jika ada
+        // Mengambil  intent
         val intent = intent.extras
         if (intent != null){
             // Jika intent tidak null, maka data akan diedit
@@ -52,9 +52,9 @@ class EditorActivity : AppCompatActivity() {
             phone.setText(user.phone)
         }
 
-        // Event listener untuk tombol Save
+        // function submit data
         btnSave.setOnClickListener {
-            // Memeriksa apakah semua field sudah terisi
+            // validasi data terisi
             if (fullName.text.isNotEmpty() && nik.text.isNotEmpty() && jurusan.text.isNotEmpty() ) {
                 if (intent != null){
                     // Jika intent tidak null, maka ini adalah proses edit data
@@ -83,9 +83,9 @@ class EditorActivity : AppCompatActivity() {
                         )
                     )
                 }
-                finish() // Menutup EditorActivity setelah operasi selesai
+                finish()
             } else {
-                // Jika ada field yang kosong, tampilkan pesan toast
+                // pesan toast
                 Toast.makeText(applicationContext, "Mohon lengkapi semua data", Toast.LENGTH_SHORT)
                     .show()
             }

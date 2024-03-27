@@ -23,9 +23,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var fab: FloatingActionButton
-    private var list = mutableListOf<User>()
+    private var list = mutableListOf<User>() // untuk menyimpan data user
     private lateinit var adapter: UserAdapter
-    private lateinit var database: AppDatabase
+    private lateinit var database: AppDatabase // Objek database
 
     private lateinit var editSearch: EditText
     private lateinit var btnSearch: ImageView
@@ -39,29 +39,27 @@ class MainActivity : AppCompatActivity() {
         editSearch = findViewById(R.id.edit_search)
         btnSearch = findViewById(R.id.btn_search)
 
-
+        // Inisialisasi adapter untuk RecyclerView
         adapter = UserAdapter(list)
         database = AppDatabase.getInstance(applicationContext)
-        //implementasi listener
+
+        // Mengatur aksi ketika item di RecyclerView diklik
         adapter.setDialog(object : UserAdapter.Dialog {
             override fun onClick(position: Int) {
-                //  membuat  dialog
+                // Membuat dialog untuk pilihan aksi
                 val dialog = AlertDialog.Builder(this@MainActivity)
                 dialog.setTitle("Pilih Aksi yang Dinginkan")
                 dialog.setItems(R.array.items_option) { dialog, which ->
-                    // Aksi
+                    // Pilihan aksi
                     when (which) {
                         0 -> {
-                            // edit
+                            // Edit data user
                             val intent = Intent(this@MainActivity, EditorActivity::class.java)
-                            // Mengambil data, id diambil dari list
                             intent.putExtra("id", list[position].uid)
-                            // Untuk membuka EditorActivity
                             startActivity(intent)
                         }
-
                         1 -> {
-                            // delete
+                            // Hapus data user
                             val animation = AnimationUtils.loadAnimation(
                                 this@MainActivity,
                                 android.R.anim.slide_in_left
@@ -70,8 +68,6 @@ class MainActivity : AppCompatActivity() {
                             recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.startAnimation(
                                 animation
                             )
-
-
                             // Menghapus data dari database
                             database.userDao().delete(list[position])
                             // Menghapus item dari list
@@ -79,7 +75,6 @@ class MainActivity : AppCompatActivity() {
                             // Memberitahu adapter bahwa item telah dihapus
                             adapter.notifyItemRemoved(position)
                         }
-
                         else -> dialog.dismiss()
                     }
                 }
@@ -87,14 +82,16 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(applicationContext, VERTICAL, false)
-        recyclerView.addItemDecoration(DividerItemDecoration(applicationContext, VERTICAL))
+        recyclerView.layoutManager = LinearLayoutManager(applicationContext, VERTICAL, false) // mengatur letak
+        recyclerView.addItemDecoration(DividerItemDecoration(applicationContext, VERTICAL)) //nambah item
 
+        // function tombol
         fab.setOnClickListener {
             startActivity(Intent(this, EditorActivity::class.java))
         }
+
+        // function searching
         btnSearch.setOnClickListener {
             if (editSearch.text.isNotEmpty()) {
                 searchData(editSearch.text.toString())
@@ -103,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Silahkan isi Dahulu", LENGTH_SHORT).show()
             }
         }
+        // function untuk editseach
         editSearch.setOnKeyListener { v, keycode, event ->
             if (editSearch.text.isNotEmpty()) {
                 searchData(editSearch.text.toString())
@@ -113,13 +111,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //panggil getData
+    // Panggil fungsi getData()
     override fun onResume() {
         super.onResume()
         getData()
     }
 
-    //membuat data
+    //  mendapatkan data dari database dan menampilkannya di RecyclerView
     @SuppressLint("NotifyDataSetChanged")
     fun getData() {
         list.clear()
@@ -127,11 +125,11 @@ class MainActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
+    //  untuk mencari data berdasarkan nama
     @SuppressLint("NotifyDataSetChanged")
     fun searchData(search: String) {
         list.clear()
         list.addAll(database.userDao().searchByName(search))
         adapter.notifyDataSetChanged()
     }
-
 }

@@ -7,11 +7,10 @@ import androidx.room.RoomDatabase
 import com.example.room.data.dao.UserDao
 import com.example.room.data.entity.User
 
-// Mendefinisikan kelas database menggunakan Room Persistence Library
 @Database(entities = [User::class], version = 5)
 abstract class AppDatabase : RoomDatabase() {
 
-    // Mendeklarasikan abstract function untuk mendapatkan objek UserDao
+    // mendapatkan objek UserDao
     abstract fun userDao(): UserDao
 
     companion object {
@@ -29,9 +28,8 @@ abstract class AppDatabase : RoomDatabase() {
                 )
                     .fallbackToDestructiveMigration() // Mengizinkan migrasi data yang merusak jika diperlukan
                     .allowMainThreadQueries() // Mengizinkan kueri dijalankan di thread utama (harus digunakan dengan hati-hati)
-                    .build() // Membangun instance database
+                    .build()
             }
-            // Mengembalikan instance database
             return instance!!
         }
     }
